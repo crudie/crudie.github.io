@@ -83,7 +83,7 @@
           if (player && state == YT.PlayerState.PLAYING) {
             var textarea = document.getElementById('output');
 
-            var content = new Date().toLocaleString() + " " + player.getCurrentTime() + " " + player.getPlaybackQuality() + "; \n";
+            var content = new Date().toLocaleString() + " " + player.getCurrentTime().toFixed(2) + " " + player.getPlaybackQuality() + "; \n";
 
             textarea.value += content;
           }
