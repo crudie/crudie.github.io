@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Testing</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  </head>
+  <body>
+      <div class="container">
+        <div class="row">
+
+    <div class="col-md-8 offset-md-4">
+      <textarea id="output" class="form-control" style="width: 100%; height: 250px;"></textarea>
+
+      <br />
+    </div>
+
+  </div>
+
+<div class="row">
+  <div class="col-md-8 offset-md-3">
+    <div id="player"></div>
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="col-md-6 offset-md-3">
+    <button id="copy" class="btn btn-lg btn-success" onclick="copyToClipboard('output')">Copy to Clipboard</button>
+  </div>
+</div>
+    </div>
+
+    <script>
+      function copyToClipboard(elementId) {
+
+        var aux = document.createElement("input");
+
+        // Get the text from the element passed into the input
+        aux.setAttribute("value", document.getElementById(elementId).value);
+
+        // Append the aux input to the body
+        document.body.appendChild(aux);
+
+        // Highlight the content
+        aux.select();
+
+        // Execute the copy command
+        document.execCommand("copy");
+
+        // Remove the input from the body
+        document.body.removeChild(aux);
+
+    }
+
+      // 2. This code loads the IFrame Player API code asynchronously.
+      var tag = document.createElement('script');
+
+      tag.src = "https://www.youtube.com/iframe_api";
+      var firstScriptTag = document.getElementsByTagName('script')[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+      // 3. This function creates an <iframe> (and YouTube player)
+      //    after the API code downloads.
+      var player;
+
+      var t;
+
+      var state;
+
+      function onYouTubeIframeAPIReady() {
+        player = new YT.Player('player', {
+          height: '360',
+          width: '100%',
+          videoId: 'j6SUpqZmp4o',
+          events: {
+            'onReady': onPlayerReady,
+            'onStateChange': onPlayerStateChange
+          }
+        });
+      }
+
+      function onEverySecond() {
+          if (player && state == YT.PlayerState.PLAYING) {
+            var textarea = document.getElementById('output');
+
+            var content = new Date().toLocaleString() + " " + player.getCurrentTime() + " " + player.getPlaybackQuality() + "; \n";
+
+            textarea.value += content;
+          }
+      }
+
+      function onPlayerReady(event) {
+        event.target.playVideo();
+
+        t = setInterval(onEverySecond, 1000);
+      }
+
+      function onPlayerStateChange(event) {
+        state = event.data;
+      }
+    </script>
+  </body>
+</html>
