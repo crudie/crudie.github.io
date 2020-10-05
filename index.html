@@ -63,7 +63,7 @@
       //    after the API code downloads.
       var player;
 
-      var t;
+      var t = setInterval(onEverySecond, 1000);
 
       var state;
 
@@ -72,8 +72,9 @@
           height: '360',
           width: '100%',
           videoId: 'j6SUpqZmp4o',
+          autoplay: '1',
           events: {
-            'onReady': onPlayerReady,
+            //'onReady': onPlayerReady,
             'onStateChange': onPlayerStateChange
           }
         });
@@ -87,12 +88,6 @@
 
             textarea.value += content;
           }
-      }
-
-      function onPlayerReady(event) {
-        event.target.playVideo();
-
-        t = setInterval(onEverySecond, 1000);
       }
 
       function onPlayerStateChange(event) {
